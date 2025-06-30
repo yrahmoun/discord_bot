@@ -1,6 +1,7 @@
 const { Client, GatewayIntentBits } = require("discord.js");
 require("dotenv").config();
 const getPreviousUser = require("./tools/getPreviousUser");
+const roll = require("./tools/roll");
 
 const client = new Client({
   intents: [
@@ -37,6 +38,10 @@ client.on("messageCreate", async (message) => {
     message.channel.send(
       `The previous user to talk before you is: ${prevUser}`
     );
+  }
+
+  if (message.content.includes("roll d")) {
+    roll(message);
   }
 });
 
