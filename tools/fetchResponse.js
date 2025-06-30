@@ -5,6 +5,9 @@ const fetchResponse = async (message) => {
 
   try {
     const doc = await Triggers.findOne({ trigger });
+    if (!doc || !doc.response || doc.response.length === 0) {
+      return;
+    }
     const count = doc.response.length;
     const random = Math.floor(Math.random() * count);
     message.channel.send(doc.response[random]);

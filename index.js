@@ -5,6 +5,7 @@ const roll = require("./tools/roll");
 const assignTrigger = require("./tools/assignTrigger");
 const checkExist = require("./tools/checkExist");
 const fetchResponse = require("./tools/fetchResponse");
+const deleteTrigger = require("./tools/deleteTrigger");
 const mongoose = require("mongoose");
 
 const client = new Client({
@@ -37,12 +38,12 @@ client.on("messageCreate", async (message) => {
     ? message.member.displayName
     : message.author.username;
 
-  if (checkExist(message)) {
-    return fetchResponse(message);
+  if (await checkExist(message)) {
+    return await fetchResponse(message);
   }
 
-  if (message.content === "ping") {
-    message.channel.send("🏓 Pong!");
+  if (message.content.includes("delete")) {
+    return await deleteTrigger(message);
   }
 
   if (message.content === "hi") {
