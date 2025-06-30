@@ -3,6 +3,8 @@ require("dotenv").config();
 const getPreviousUser = require("./tools/getPreviousUser");
 const roll = require("./tools/roll");
 const assignTrigger = require("./tools/assignTrigger");
+const checkExist = require("./tools/checkExist");
+const fetchResponse = require("./tools/fetchResponse");
 const mongoose = require("mongoose");
 
 const client = new Client({
@@ -34,6 +36,10 @@ client.on("messageCreate", async (message) => {
   const displayName = message.member
     ? message.member.displayName
     : message.author.username;
+
+  if (checkExist(message)) {
+    return fetchResponse(message);
+  }
 
   if (message.content === "ping") {
     message.channel.send("🏓 Pong!");
