@@ -2,6 +2,8 @@ const { Client, GatewayIntentBits } = require("discord.js");
 require("dotenv").config();
 const getPreviousUser = require("./tools/getPreviousUser");
 const roll = require("./tools/roll");
+const assignTrigger = require("./tools/assignTrigger");
+const mongoose = require("mongoose");
 
 const client = new Client({
   intents: [
@@ -10,6 +12,15 @@ const client = new Client({
     GatewayIntentBits.MessageContent, //Lets the bot read the actual message text (e.g., "!ping")
   ],
 });
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log("databse connected");
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
 const TOKEN = process.env.TOKEN;
 
@@ -42,6 +53,10 @@ client.on("messageCreate", async (message) => {
 
   if (message.content.includes("roll d")) {
     roll(message);
+  }
+
+  if (message.content.includes(" == ")) {
+    assignTrigger(message);
   }
 });
 
