@@ -6,6 +6,8 @@ const assignTrigger = require("./tools/assignTrigger");
 const checkExist = require("./tools/checkExist");
 const fetchResponse = require("./tools/fetchResponse");
 const deleteTrigger = require("./tools/deleteTrigger");
+const addResponse = require("./tools/addResponse");
+const deleteResponse = require("./tools/deleteResponse");
 const mongoose = require("mongoose");
 
 const client = new Client({
@@ -64,6 +66,14 @@ client.on("messageCreate", async (message) => {
 
   if (message.content.includes(" == ")) {
     assignTrigger(message);
+  }
+
+  if (message.content.includes(" += ")) {
+    addResponse(message);
+  }
+
+  if (message.content.includes(" -= ")) {
+    deleteResponse(message);
   }
 });
 
