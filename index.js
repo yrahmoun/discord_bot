@@ -9,6 +9,12 @@ const deleteTrigger = require("./tools/deleteTrigger");
 const addResponse = require("./tools/addResponse");
 const deleteResponse = require("./tools/deleteResponse");
 const mongoose = require("mongoose");
+const express = require("express");
+
+const app = express();
+
+app.get("/", (req, res) => res.send("Bot is running"));
+app.listen(3000);
 
 const client = new Client({
   intents: [
