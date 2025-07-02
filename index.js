@@ -8,6 +8,7 @@ const fetchResponse = require("./tools/fetchResponse");
 const deleteTrigger = require("./tools/deleteTrigger");
 const addResponse = require("./tools/addResponse");
 const deleteResponse = require("./tools/deleteResponse");
+const aiReply = require("./tools/aiReply");
 const mongoose = require("mongoose");
 const express = require("express");
 
@@ -49,23 +50,27 @@ client.on("messageCreate", async (message) => {
     return await fetchResponse(message);
   }
 
-  if (message.content.includes("delete")) {
+  if (message.content.toLowerCase().includes("delete")) {
     return await deleteTrigger(message);
   }
 
-  if (message.content === "hi") {
+  if (message.content.toLowerCase().startsWith(process.env.BOT_NAME)) {
+    return await aiReply(message);
+  }
+
+  if (message.content.toLowerCase() === "hi") {
     message.channel.send(`Hello, ${displayName}`);
   }
 
   const prevUser = await getPreviousUser(message);
 
-  if (message.content === "prev") {
+  if (message.content.toLowerCase() === "prev") {
     message.channel.send(
       `The previous user to talk before you is: ${prevUser}`
     );
   }
 
-  if (message.content.includes("roll d")) {
+  if (message.content.toLowerCase().includes("roll d")) {
     roll(message);
   }
 
