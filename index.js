@@ -15,6 +15,7 @@ const client = new Client({
     GatewayIntentBits.Guilds, //Lets the bot know about servers it joins
     GatewayIntentBits.GuildMessages, //Lets the bot receive messages sent in servers
     GatewayIntentBits.MessageContent, //Lets the bot read the actual message text (e.g., "!ping")
+    GatewayIntentBits.GuildMembers, // Required to access member info
   ],
 });
 
@@ -36,9 +37,7 @@ client.once("ready", () => {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
-  const displayName = message.member
-    ? message.member.displayName
-    : message.author.username;
+  const displayName = message.member.displayName;
 
   if (await checkExist(message)) {
     return await fetchResponse(message);

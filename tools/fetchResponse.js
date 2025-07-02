@@ -1,4 +1,5 @@
 const Triggers = require("../models/triggerModel");
+const formatResponse = require("./formatResponse");
 
 const fetchResponse = async (message) => {
   const trigger = message.content.trim();
@@ -10,7 +11,9 @@ const fetchResponse = async (message) => {
     }
     const count = doc.response.length;
     const random = Math.floor(Math.random() * count);
-    message.channel.send(doc.response[random]);
+    const response = doc.response[random];
+    const reply = await formatResponse(message, response);
+    message.channel.send(reply);
   } catch (error) {
     message.channel.send("❌ Failed to fetch response.");
     console.error(error);

@@ -4,7 +4,6 @@ const roll = (message) => {
   const msg = message.content.trim();
   const max = msg.split("d")[1];
   const num = parseInt(max);
-  console.log(num);
   if (isNaN(num) || num <= 0) {
     message.channel.send("❌ Please send a valid number");
     return;
